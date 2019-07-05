@@ -4,3 +4,33 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+
+<p class="alert alert-warning alert-dismissible fade show" role="alert" onclick="w()">Ciao!!!!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </p>
+
+<script>
+
+    var a = 10;
+    x();
+
+    function w() {
+        var a = 20;
+        console.log(a);
+    }
+
+    function x(par) {
+        console.log('io sono x');
+        console.log(par);
+    }
+
+    function y(f) {
+        f();
+    }
+
+    console.log(a);
+
+</script>
