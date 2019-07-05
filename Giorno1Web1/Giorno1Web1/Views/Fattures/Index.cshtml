@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Giorno1Web1.Fatture>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 id="lblTitolo">Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numero)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="riga_@item.id">
+            <td id="nome_@item.id">
+                @Html.DisplayFor(modelItem => item.nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numero)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+                <input type="text" id="txtTitolo_@item.id" />
+                <button onclick="faiQualcosa(@item.id)">Testo nel titolo</button>
+                <button onclick="cambiaColore(@item.id)">Colora riga</button>
+                <button onclick="vaiSulServer(@item.id)">AJAX</button>
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    function faiQualcosa(id) {
+        console.log('messaggio');
+        // alert('ciao!!');
+        $('#lblTitolo').text($('#txtTitolo_' + id).val());
+    }
+
+    function cambiaColore(id) {
+        $('#riga_' + id).css('background-color', $('#txtTitolo_' + id).val());
+    }
+    setInterval(
+        function (id) {
+            $.ajax({
+                url: '/api/FatturesWS',
+                method: 'get'
+            })
+                .done(function (datiDalServer) {
+                    datiDalServer.forEach(f => $('#nome_' + f.id).text(f.nome));
+                });
+        }, 1000);
+</script>
